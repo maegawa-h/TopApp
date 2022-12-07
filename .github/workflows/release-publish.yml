@@ -11,7 +11,7 @@ on:
 
 jobs:
   publish:
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
     env:
       # slnファイルの存在するフォルダの相対パス
       SolutionPath: src/TopApp
@@ -37,16 +37,15 @@ jobs:
 
       - name: Restore dependencies
         run: |
-          ls -R
-#          dotnet restore ${SolutionPath}
+          dotnet restore ${SolutionPath}
 
       - name: Build
-        run: dotnet build ${SolutionPath} --configuration release
+        run: dotnet build ${SolutionPath} --no-restore --configuration release
 
       - name: Release
         run: |
           ls -R
           tag=`git describe --tags --abbrev=0`
           gh release create $tag -R https://github.com/maegawa-h/TopApp
-          gh release upload $tag ${AppPath}\TopApp.exe -R https://github.com/maegawa-h/TopApp
+          gh release upload $tag ${AppPath}\TopApp -R https://github.com/maegawa-h/TopApp
 
