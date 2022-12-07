@@ -1,0 +1,45 @@
+name: release-publish
+on:
+  workflow_dispatch:
+  workflow_run:
+    workflows:
+      - update-version
+    branches:
+      - main
+    types: 
+      - completed
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    env:
+      # slnファイルの存在するフォルダの相対パス
+      SolutionPath: src/TopApp
+
+      # nupkgのビルド結果があるbinのパス
+      # プロジェクトが複数ある場合はすべて登録すること
+      AppPath: src/TopApp/TopApp/bin/Release/netcoreapp3.1
+      GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: 3.1.x
+
+      - name: Restore dependencies
+        run: dotnet restore ${SolutionPath}
+
+      - name: Build
+        run: dotnet build ${SolutionPath} --no-restore --configuration release
+
+      - name: Release
+        run: |
+          tag=`git describe --tags --abbrev=0`
+          gh release create $tag -R https://github.com/maegawa-h/TopApp
+          gh release upload $tag ${AppPath}/TopApp.exe -R https://github.com/maegawa-h/TopApp
+
