@@ -14,11 +14,11 @@ jobs:
     runs-on: windows-latest
     env:
       # slnファイルの存在するフォルダの相対パス
-      SolutionPath: .\src\TopApp
+      SolutionPath: src/TopApp
 
       # nupkgのビルド結果があるbinのパス
       # プロジェクトが複数ある場合はすべて登録すること
-      AppPath: .\src\TopApp\TopApp\bin\Release\netcoreapp3.1
+      AppPath: src/TopApp/TopApp/bin/Release/netcoreapp3.1
       GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
     steps:
@@ -38,10 +38,10 @@ jobs:
       - name: Restore dependencies
         run: |
           ls -R
-          dotnet restore ${SolutionPath}
+#          dotnet restore ${SolutionPath}
 
       - name: Build
-        run: dotnet build ${SolutionPath} --no-restore --configuration release
+        run: dotnet build ${SolutionPath} --configuration release
 
       - name: Release
         run: |
