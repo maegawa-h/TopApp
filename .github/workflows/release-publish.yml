@@ -43,6 +43,7 @@ jobs:
 
       - name: Release
         run: |
+          ls -R
           tag=`git describe --tags --abbrev=0`
           gh release create $tag -R https://github.com/maegawa-h/TopApp
           gh release upload $tag ${AppPath}/TopApp.exe -R https://github.com/maegawa-h/TopApp
