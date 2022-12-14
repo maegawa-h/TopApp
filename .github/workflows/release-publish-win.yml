@@ -25,8 +25,8 @@ jobs:
           dotnet-version: 3.1.x
 
       - name: Add Source
-        run: 
-          cd ${SolutionPath}
+        run: |
+          cd ./{SolutionPath}
           dotnet nuget add source "https://nuget.pkg.github.com/maegawa-h/index.json" -n github -u ${{ secrets.NUGET_GITHUB_USER }} -p ${{ secrets.NUGET_GITHUB_TOKEN }} --store-password-in-clear-text
 
       - name: Restore dependencies
