@@ -31,7 +31,8 @@ jobs:
 
       - name: Restore dependencies
         run: |
-          cd ${SolutionPath}
+          pwd
+          cd ./${SolutionPath}
           ls
           dotnet restore
 
