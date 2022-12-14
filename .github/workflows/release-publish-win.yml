@@ -36,10 +36,11 @@ jobs:
       - name: Build
         run: |
           dotnet build $env:SolutionPath --no-restore --configuration release
+          Compress-Archive -Path $env:AppPath -DestinationPath $env:AppPath/TopApp.zip
 
       - name: Release
         run: |
           ls -R
           $tag = git describe --tags --abbrev=0
           gh release create $tag -R https://github.com/maegawa-h/TopApp
-          gh release upload $tag $env:AppPath/TopApp.exe -R https://github.com/maegawa-h/TopApp
+          gh release upload $tag $env:AppPath/TopApp.zip -R https://github.com/maegawa-h/TopApp
