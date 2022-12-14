@@ -31,7 +31,9 @@ jobs:
 
       - name: Restore dependencies
         run: |
-          dotnet restore ${SolutionPath}
+          cd ${SolutionPath}
+          ls
+          dotnet restore
 
       - name: Build
         run: dotnet build ${SolutionPath} --no-restore --configuration release
