@@ -11,17 +11,21 @@ jobs:
     runs-on: windows-latest
     steps:
       - id: step1
-        run: echo "output1=hello" >> $GITHUB_ENV
-        shell: bash
+        shell: pwsh
+        run: |
+          echo "output1='hello'" | Out-File -FilePath $env:GITHUB_ENV -Append
       - id: step2
-        run: echo "output2=world" >> $GITHUB_ENV
-        shell: bash
+        shell: pwsh
+        run: |
+          echo "output2='world'" | Out-File -FilePath $env:GITHUB_ENV -Append
     outputs:
-      output1: ${{ steps.step1.outputs.output1 }}
-      output2: ${{ steps.step2.outputs.output2 }}
+      output1: ${{ env.output1 }}
+      output2: ${{ env.output2 }}
 
   job2:
     needs: job1
     runs-on: windows-latest
     steps:
-      - run: echo "${{ needs.job1.outputs.output1 }} ${{ needs.job1.outputs.output2 }}"
+      - shell: pwsh
+        run: |
+          echo "${{ needs.job1.outputs.output1 }} ${{ needs.job1.outputs.output2 }}"
