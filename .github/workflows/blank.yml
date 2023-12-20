@@ -10,6 +10,10 @@ jobs:
   job1:
     runs-on: windows-latest
     steps:
-      - id: step1
+      - name: Checkout repository
+        uses: actions/checkout@v2
+    
+      - name: Add markdown to job summary
+        shell: pwsh
         run: |
-          echo '### Hello world! ' | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
+          Get-Content markdown_sample.md | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
