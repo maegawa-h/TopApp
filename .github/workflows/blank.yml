@@ -18,6 +18,11 @@ jobs:
         shell: pwsh
         run: |
           echo "output2='world'" | Out-File -FilePath $env:GITHUB_ENV -Append
+      - id: step3
+        shell: pwsh
+        run: |
+          echo ${{ env.output1 }}   
+          echo ${{ env.output2 }}   
     outputs:
       output1: ${{ env.output1 }}
       output2: ${{ env.output2 }}
