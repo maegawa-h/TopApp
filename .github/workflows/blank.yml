@@ -12,7 +12,4 @@ jobs:
     steps:
       - id: step1
         run: |
-          Set-Content -Path $ENV:GITHUB_STEP_SUMMARY -value "total  : "
-          Add-Content -Path $ENV:GITHUB_STEP_SUMMARY -value "success: "
-          Add-Content -Path $ENV:GITHUB_STEP_SUMMARY -value "failure: " 
-          
+          echo '### Hello world! ' | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
