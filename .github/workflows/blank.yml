@@ -19,7 +19,7 @@ jobs:
           $content = Get-Content markdown_sample.md -Raw
           $escapedContent = $content -replace "`n", "\\n"
           $escapedContent
-          $escapedContent2 = $content -replace "`r`n", "\\n"
+          $escapedContent2 = $content -replace "`r`n", "\n"
           $escapedContent2
           echo "output2=$escapedContent2" | Out-File -FilePath $env:GITHUB_ENV -Append
 
@@ -30,7 +30,7 @@ jobs:
           # For posting a rich message using Block Kit
           payload: |
             {
-              "text": ${{ env.output2 }},
+              "text": "${{ env.output2 }}",
               "blocks": [
                 {
                   "type": "section",
