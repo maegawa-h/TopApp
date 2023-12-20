@@ -16,7 +16,8 @@ jobs:
       - name: Add markdown to job summary
         shell: pwsh
         run: |
-          echo "output2=$(Get-Content markdown_sample.md)" | ConvertTo-Json | Out-File -FilePath $env:GITHUB_ENV -Append
+          $tt = echo "output2=$(Get-Content markdown_sample.md)" | ConvertTo-Json
+          echo $tt | Out-File -FilePath $env:GITHUB_ENV -Append
 
       - name: Send custom JSON data to Slack workflow
         id: slack
