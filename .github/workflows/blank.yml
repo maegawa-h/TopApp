@@ -11,9 +11,11 @@ jobs:
     runs-on: windows-latest
     steps:
       - id: step1
-        run: echo "::set-output name=output1::hello"
+        run: echo "output1=hello" >> $GITHUB_ENV
+        shell: bash
       - id: step2
-        run: echo "::set-output name=output2::world"
+        run: echo "output2=world" >> $GITHUB_ENV
+        shell: bash
     outputs:
       output1: ${{ steps.step1.outputs.output1 }}
       output2: ${{ steps.step2.outputs.output2 }}
