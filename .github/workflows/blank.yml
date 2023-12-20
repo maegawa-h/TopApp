@@ -10,6 +10,14 @@ jobs:
   job1:
     runs-on: windows-latest
     steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+    
+      - name: Add markdown to job summary
+        shell: pwsh
+        run: |
+          Get-Content markdown_sample.md | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
+
       - name: Send custom JSON data to Slack workflow
         id: slack
         uses: slackapi/slack-github-action@v1.24.0
@@ -17,7 +25,7 @@ jobs:
           # For posting a rich message using Block Kit
           payload: |
             {
-              "text": "GitHub Action build result: ${{ job.status }}\n${{ github.event.pull_request.html_url || github.event.head_commit.url }}",
+              "text": "${{ $env:GITHUB_STEP_SUMMARY }}",
               "blocks": [
                 {
                   "type": "section",
