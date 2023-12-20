@@ -1,0 +1,25 @@
+name: output_sample
+
+# Controls when the workflow will run
+on:
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  job1:
+    runs-on: windows-latest
+    steps:
+      - id: step1
+        run: echo "::set-output name=output1::hello"
+      - id: step2
+        run: echo "::set-output name=output2::world"
+    outputs:
+      output1: ${{ steps.step1.outputs.output1 }}
+      output2: ${{ steps.step2.outputs.output2 }}
+
+  job2:
+    needs: job1
+    runs-on: windows-latest
+    steps:
+      - run: echo "${{ needs.job1.outputs.output1 }} ${{ needs.job1.outputs.output2 }}"
