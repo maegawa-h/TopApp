@@ -18,6 +18,7 @@ jobs:
         run: |
           $content = Get-Content markdown_sample.md -Raw
           $escapedContent = $content -replace "`n", "\\n"
+          $escapedContent
           echo "output2=$escapedContent" | Out-File -FilePath $env:GITHUB_ENV -Append
 
       - name: Send custom JSON data to Slack workflow
