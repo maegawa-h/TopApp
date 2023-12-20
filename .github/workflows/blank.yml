@@ -17,6 +17,7 @@ jobs:
         shell: pwsh
         run: |
           $tt = echo "output2=$(Get-Content markdown_sample.md)" | ConvertTo-Json
+          echo $tt
           echo $tt | Out-File -FilePath $env:GITHUB_ENV -Append
 
       - name: Send custom JSON data to Slack workflow
@@ -26,7 +27,7 @@ jobs:
           # For posting a rich message using Block Kit
           payload: |
             {
-              "text": ${{ env.output2 }},
+              "text": $(Get-Content markdown_sample.md),
               "blocks": [
                 {
                   "type": "section",
