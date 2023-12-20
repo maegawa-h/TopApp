@@ -21,7 +21,7 @@ jobs:
           $escapedContent
           $escapedContent2 = $content -replace "`r`n", "\\r\\n"
           $escapedContent2
-          echo "output2=$escapedContent" | Out-File -FilePath $env:GITHUB_ENV -Append
+          echo "output2=$escapedContent2" | Out-File -FilePath $env:GITHUB_ENV -Append
 
       - name: Send custom JSON data to Slack workflow
         id: slack
