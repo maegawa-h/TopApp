@@ -11,26 +11,8 @@ jobs:
     runs-on: windows-latest
     steps:
       - id: step1
-        shell: pwsh
         run: |
-          echo "output1='hello'" | Out-File -FilePath $env:GITHUB_ENV -Append
-      - id: step2
-        shell: pwsh
-        run: |
-          echo "output2='world'" | Out-File -FilePath $env:GITHUB_ENV -Append
-      - id: step3
-        shell: pwsh
-        run: |
-          echo ${{ env.output1 }}   
-          echo ${{ env.output2 }}   
-    outputs:
-      output1: ${{ env.output1 }}
-      output2: ${{ env.output2 }}
-
-  job2:
-    needs: job1
-    runs-on: windows-latest
-    steps:
-      - shell: pwsh
-        run: |
-          echo "${{ needs.job1.outputs.output1 }} ${{ needs.job1.outputs.output2 }}"
+          Set-Content -Path $ENV:GITHUB_STEP_SUMMARY -value "total  : "
+          Add-Content -Path $ENV:GITHUB_STEP_SUMMARY -value "success: "
+          Add-Content -Path $ENV:GITHUB_STEP_SUMMARY -value "failure: " 
+          
