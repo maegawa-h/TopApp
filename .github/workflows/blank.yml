@@ -16,7 +16,7 @@ jobs:
       - name: Add markdown to job summary
         shell: pwsh
         run: |
-          Get-Content markdown_sample.md | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
+          echo "output2=$(Get-Content markdown_sample.md)" | Out-File -FilePath $env:GITHUB_ENV -Append
 
       - name: Send custom JSON data to Slack workflow
         id: slack
@@ -25,7 +25,7 @@ jobs:
           # For posting a rich message using Block Kit
           payload: |
             {
-              "text": "${{ $env:GITHUB_STEP_SUMMARY }}",
+              "text": ${{ env.output1 }},
               "blocks": [
                 {
                   "type": "section",
