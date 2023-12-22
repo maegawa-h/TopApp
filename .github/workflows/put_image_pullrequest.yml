@@ -1,0 +1,40 @@
+name: Create and add chart to PR comment
+on:
+  pull_request:
+    types: [opened]
+
+jobs:
+  createAndAddChart:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.x'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install matplotlib pandas
+
+      - name: Create chart
+        run: |
+          python create_chart.py
+
+      - name: Create comment
+        uses: actions/github-script@v5
+        with:
+          github-token: ${{secrets.GITHUB_TOKEN}}
+          script: |
+            const fs = require('fs');
+            const chart = fs.readFileSync('./chart.png', { encoding: 'base64' });
+            const issueComment = `!chart`;
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: issueComment
+            })
