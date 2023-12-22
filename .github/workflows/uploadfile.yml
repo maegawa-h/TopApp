@@ -1,0 +1,26 @@
+name: Create and add chart to PR comment
+on:
+  pull_request:
+    types: [opened, reopen, closed]
+
+jobs:
+  createAndAddChart:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Create comment
+        uses: actions/github-script@v5
+        with:
+          github-token: ${{secrets.GH_REP_TOKEN}}
+          script: |
+            const fs = require('fs');
+            const chart = fs.readFileSync('./キャプチャ.PNG', { encoding: 'base64' });
+            const issueComment = `!chart`;
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: issueComment
+            })
