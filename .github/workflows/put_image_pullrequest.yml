@@ -23,6 +23,7 @@ jobs:
       - name: Create chart
         run: |
           python create_chart.py
+          ls -al
 
       - name: Create comment
         uses: actions/github-script@v5
