@@ -27,3 +27,5 @@ Try `cp --help' for more information.
 
 markdown形式については、Wikipediaなども参照ください
 - http://ja.wikipedia.org/wiki/Markdown
+
+---
