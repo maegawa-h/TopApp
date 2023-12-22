@@ -16,7 +16,7 @@ jobs:
           script: |
             const fs = require('fs');
             const chart = fs.readFileSync('./キャプチャ.PNG', { encoding: 'base64' });
-            const issueComment = `![tt](https://raw.githubusercontent.com/${{ github.repository }}/${{ github.ref }} /キャプチャ.PNG}`;
+            const issueComment = `![tt](https://raw.githubusercontent.com/${{ github.repository }}/${{ github.base_ref }} /キャプチャ.PNG}`;
             github.rest.issues.createComment({
               issue_number: context.issue.number,
               owner: context.repo.owner,
