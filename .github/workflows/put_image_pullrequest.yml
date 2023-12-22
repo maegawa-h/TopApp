@@ -1,7 +1,7 @@
 name: Create and add chart to PR comment
 on:
   pull_request:
-    types: [opened, reopen]
+    types: [opened, reopen, close]
 
 jobs:
   createAndAddChart:
